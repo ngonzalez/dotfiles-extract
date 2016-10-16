@@ -1,0 +1,4 @@
+#! /bin/bash
+
+createdDate=`/usr/bin/GetFileInfo -d $1`
+/usr/bin/SetFile -m "$createdDate" $1

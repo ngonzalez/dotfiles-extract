@@ -1,0 +1,6 @@
+#! /bin/bash
+cd $1
+ls -a | grep -iv complete | sort | xargs touch | ls -a | grep -iv complete | sort | xargs -I '{}' ~/.setfile '{}'
+cd ..
+echo "$1"
+echo "---"

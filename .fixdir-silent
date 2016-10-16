@@ -1,0 +1,7 @@
+#! /bin/bash
+cd $1
+file=`ls | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' | tail -1`
+modifiedDate=`/usr/bin/GetFileInfo -m "$file"`
+cd ..
+/usr/bin/SetFile -d "$modifiedDate" $1
+/usr/bin/SetFile -m "$modifiedDate" $1

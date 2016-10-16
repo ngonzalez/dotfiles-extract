@@ -1,0 +1,39 @@
+#! /bin/bash
+cd $1
+info="[TC]"
+currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
+if [[ `ls | grep $info` ]]; then
+  true
+else
+  playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
+  if [ $playlist ]; then
+    if [ -f $playlist ]; then
+      ls -1a | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc1-filecheck-$currenttime"
+      cat $playlist | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc2-filecheck-$currenttime"
+      if [ $(diff -i -B --strip-trailing-cr /tmp/sc1-filecheck-$currenttime /tmp/sc2-filecheck-$currenttime | wc -l) == '0' ]; then
+        files=$(ls -1a | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' | wc -l | bc)
+        res=`/usr/local/bin/cfv`
+        if [[ $res =~ "$files OK" ]]; then
+          last_file=$(cat "/tmp/sc1-filecheck-$currenttime" | tail -n 1)
+          date=$(/usr/bin/GetFileInfo -m $last_file)
+          genre=`/usr/local/bin/mp3info -p %g $last_file`
+          name="$info $genre - $files files OK $info"
+          mkdir "$name"
+          `/usr/bin/SetFile -d "$date" "$name"
+          `/usr/bin/SetFile -m "$date" "$name"
+        else
+          mkdir "$info CRC Error $info"
+        fi
+      else
+        mkdir "$info Missing files $info"
+      fi
+      if [ -f "/tmp/sc1-filecheck-$currenttime" ]; then
+        rm -f "/tmp/sc1-filecheck-$currenttime"
+      fi
+      if [ -f "/tmp/sc2-filecheck-$currenttime" ]; then
+        rm -f "/tmp/sc2-filecheck-$currenttime"
+      fi
+    fi
+  fi
+fi
+cd ..

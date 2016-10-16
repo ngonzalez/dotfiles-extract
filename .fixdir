@@ -1,0 +1,13 @@
+#! /bin/bash
+cd $1
+# file=`ls | grep --colour=never '\.mp3\|\.wav\|\.flac|\.aiff|\.m4a' | tail -1`
+file=`ls | grep -iv complete | tail -1`
+modifiedDate=`/usr/bin/GetFileInfo -m "$file"`
+# /bin/chmod 751 *
+cd ..
+/usr/bin/SetFile -d "$modifiedDate" $1
+/usr/bin/SetFile -m "$modifiedDate" $1
+# /bin/chmod 751 $1
+echo "$1"
+echo "$modifiedDate"
+echo "---"
