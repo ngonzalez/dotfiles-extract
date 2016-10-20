@@ -1,11 +1,11 @@
 #! /bin/bash
 cd $1
-info="[TC]"
+grp="TC"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 file1="/tmp/sc1-filecheck-$currenttime"
 file2="/tmp/sc2-filecheck-$currenttime"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
-if [[ `ls | grep $info` ]]; then
+if [[ `ls | grep "\[$grp\]" --colour=never | wc -l | bc` > 0 ]]; then
   true
 else
   playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
@@ -19,15 +19,15 @@ else
           last_file=`cat $file1 | tail -n 1`
           date=`/usr/bin/GetFileInfo -m $last_file`
           genre=`/usr/local/bin/mp3info -p %g $last_file`
-          name="$info $genre - $count files OK $info"
+          name="[$grp] $genre - $count files OK [$grp]"
           mkdir "$name"
           `/usr/bin/SetFile -d "$date" "$name"
           `/usr/bin/SetFile -m "$date" "$name"
         else
-          mkdir "$info CRC Error $info"
+          mkdir "[$grp] CRC Error [$grp]"
         fi
       else
-        mkdir "$info Missing files $info"
+        mkdir "[$grp] Missing files [$grp]"
       fi
       if [ -f $file1 ]; then
         rm -f $file1
