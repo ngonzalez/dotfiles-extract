@@ -18,23 +18,26 @@ NC='\033[0m' # No Color
 cd $1
 info="[TC]"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
+ext='\.(wav|aif|aiff|flac|mp3|m4a)'
+file1="/tmp/sc1-filecheck-$currenttime"
+file2="/tmp/sc2-filecheck-$currenttime"
 
 playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
 if [ $playlist ]; then
     if [ -f $playlist ]; then
-        ls -1a | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc1-diff-$currenttime"
-        cat $playlist | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc2-diff-$currenttime"
-        if [ $(diff -i -B --strip-trailing-cr /tmp/sc1-diff-$currenttime /tmp/sc2-diff-$currenttime | wc -l) != '0' ]; then
+        ls -1a | grep -E --colour=never $ext > $file1
+        cat $playlist | grep -E $ext --colour=never > $file2
+        if [ `diff -i -B --strip-trailing-cr $file1 $file2 | wc -l | bc` != 0 ]; then
           echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
-          echo -e "${RED}$(diff $playlist /tmp/sc1-diff-$currenttime)${NC}"
+          echo -e "${RED}$(diff $playlist $file1)${NC}"
         else
           echo -e "${DARK_GREY}$1${NC} ${GREEN}OK${NC}"
         fi
-        if [ -f "/tmp/sc1-diff-$currenttime" ]; then
-            rm -f "/tmp/sc1-diff-$currenttime"
+        if [ -f $file1 ]; then
+          rm -f $file1
         fi
-        if [ -f "/tmp/sc2-diff-$currenttime" ]; then
-            rm -f "/tmp/sc2-diff-$currenttime"
+        if [ -f $file2 ]; then
+          rm -f $file2
         fi
     fi
 else
