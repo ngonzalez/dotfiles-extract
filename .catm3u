@@ -21,8 +21,8 @@ currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 
 playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
 if [ $playlist ]; then
-	if [ -f $playlist ]; then
-		ls -1a | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc1-diff-$currenttime"
+    if [ -f $playlist ]; then
+        ls -1a | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc1-diff-$currenttime"
     cat $playlist | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' > "/tmp/sc2-diff-$currenttime"
     if [ $(diff -i -B --strip-trailing-cr /tmp/sc1-diff-$currenttime /tmp/sc2-diff-$currenttime | wc -l) != '0' ]; then
       echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
@@ -30,13 +30,13 @@ if [ $playlist ]; then
     else
       echo -e "${DARK_GREY}$1${NC} ${GREEN}OK${NC}"
     fi
-		if [ -f "/tmp/sc1-diff-$currenttime" ]; then
-			rm -f "/tmp/sc1-diff-$currenttime"
-		fi
-		if [ -f "/tmp/sc2-diff-$currenttime" ]; then
-			rm -f "/tmp/sc2-diff-$currenttime"
-		fi
-	fi
+        if [ -f "/tmp/sc1-diff-$currenttime" ]; then
+            rm -f "/tmp/sc1-diff-$currenttime"
+        fi
+        if [ -f "/tmp/sc2-diff-$currenttime" ]; then
+            rm -f "/tmp/sc2-diff-$currenttime"
+        fi
+    fi
 else
-	echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
+    echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
 fi
