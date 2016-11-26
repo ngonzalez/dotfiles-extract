@@ -16,7 +16,6 @@ DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
 cd $1
-info="[TC]"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 file1="/tmp/sc1-filecheck-$currenttime"
