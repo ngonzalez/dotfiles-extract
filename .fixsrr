@@ -1,2 +1,2 @@
 #! /bin/bash
-cd $1 && srr.py -y *.srr && cd ..
+cd $1 && srr.py -y *.srr
