@@ -9,7 +9,8 @@ export GOPATH='/Users/enyo/Library/go'
 
 # PS1="\u:\w\$(git branch 2>/dev/null | grep --colour=never -e '\* ' | sed 's/^..\(.*\)/ (\[\033[0;32m\]\1\[\033[0m\])/') $ "
 # Custom bash prompt via kirsle.net/wizards/ps1.html
-export PS1="\[$(tput bold)\]\[$(tput setaf 4)\]\[$(tput setaf 5)\]\u\[$(tput setaf 2)\] \W\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
+# export PS1="\[$(tput bold)\]\[$(tput setaf 4)\]\[$(tput setaf 5)\]\u\[$(tput setaf 2)\] \W\[$(tput setaf 4)\] \\$ \[$(tput sgr0)\]"
+export PS1="\u:\w\$(git branch 2>/dev/null | grep --colour=never -e '\* ' | sed 's/^..\(.*\)/ (\[\033[0;32m\]\1\[\033[0m\])/') $ "
 
 alias ls="ls -1"
 alias l="ls -alrtTGh"
