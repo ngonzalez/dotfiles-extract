@@ -27,7 +27,6 @@ alias start_redis="redis-server /usr/local/etc/redis.conf"
 alias start_solr="bundle exec sunspot-solr start -p 8982"
 alias start_ftp="/usr/local/sbin/pure-ftpd -lpgsql:/etc/pureftpd-pgsql.conf --verboselog --passiveportrange='60000:60001' --chrooteveryone"
 # alias start_ftp="pure-ftpd --verboselog -lpuredb:/opt/local/etc/pure-ftpd/conf/pureftpd.pdb"
-# alias checkftplogs="tail -f /var/log/ftp.log"
 # alias start_mysql="sudo -u mysql mysqld_safe5"
 # alias stop_mysql="sudo -u mysql mysqladmin5 -u root -p shutdown"
 
