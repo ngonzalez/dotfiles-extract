@@ -1,9 +1,9 @@
-# export PATH=$HOME/.rvm/gems/ruby-head/bin:$HOME/.rvm/bin:/opt/local/bin:/opt/local/sbin:/Users/enyo/Library/go/bin:$PATH
 export GREP_OPTIONS='--color=always'
 export GREP_COLORS='ms=01;37:mc=01;37:sl=:cx=01;30:fn=35:ln=32:bn=32:se=36'
 export LESS='-R'
 export CLICOLOR='YES'
 export GOPATH='/Users/enyo/Library/go'
+export PATH="$PATH:$GOPATH/bin:/usr/local/sbin"
 
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
