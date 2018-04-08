@@ -33,7 +33,7 @@
   ls = ls-files
   ign = ls-files -o -i --exclude-standard
 [user]
-  email = nicolas.gonzalez@trainline.com
+  email = nicolasgonzalez180@gmail.com
   name = Nicolas Gonzalez
 [url "git@github.com:"]
   insteadOf = https://github.com/
