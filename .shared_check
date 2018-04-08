@@ -34,7 +34,7 @@ else
           size=$(( $size_du / 2048 ))
           count_str=$count
           count_str+="F"
-          name="[$grp] $genre - $count_str $size"MB" - Complete [$grp]"
+          name="[$grp] $genre - $count_str $size"MB" - COMPLETE [$grp]"
           touch "$name"
           echo -e "${GREEN}$name${NC}"
           date=`/usr/bin/GetFileInfo -m $last_file`

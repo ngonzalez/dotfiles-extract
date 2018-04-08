@@ -1,2 +1,0 @@
-#! /bin/bash
-cd $1 && srr.py -y *.srr

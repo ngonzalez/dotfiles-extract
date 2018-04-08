@@ -1,0 +1,19 @@
+#! /bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+LIGHT_GREY='\033[0;37m'
+DARK_GREY='\033[1;30m'
+NC='\033[0m' # No Color
+
+d=`/usr/bin/GetFileInfo -m "$1"`
+cd $1
+for i in $(ls -A | grep -v COMPLETE | sort); do
+  /usr/bin/SetFile -d "${d}" ${i}
+  /usr/bin/SetFile -m "${d}" ${i}
+done
+
+/usr/bin/SetFile -d "${d}" "../$1"
+/usr/bin/SetFile -m "${d}" "../$1"
+
+echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}$1${NC} ${GREEN}✓${NC}"
