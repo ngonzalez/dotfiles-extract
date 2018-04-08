@@ -1,9 +1,0 @@
-#! /bin/bash
-cd $1
-file=`ls | grep --colour=never '\.sfv'`
-content=`cat $file`
-echo "=> $1"
-echo " "
-echo "$content"
-echo " "
-echo "---"
