@@ -1,5 +1,0 @@
-#! /bin/bash
-cd $1
-ls -A | sort | grep -iv complete | xargs -I '{}' ~/.setfile '{}'
-echo "$1"
-echo "---"
