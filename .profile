@@ -1,3 +1,5 @@
+# http://linux-sxs.org/housekeeping/lscolors.html
+
 # export PATH=/opt/local/bin:/opt/local/sbin:/Users/enyo/Library/go/bin:$PATH
 export GREP_OPTIONS='--color=always'
 export GREP_COLORS='ms=01;37:mc=01;37:sl=:cx=01;30:fn=35:ln=32:bn=32:se=36'
