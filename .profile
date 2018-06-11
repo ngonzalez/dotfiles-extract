@@ -25,14 +25,19 @@ alias start_ftp="/usr/local/sbin/pure-ftpd /usr/local/etc/pure-ftpd.conf -lpgsql
 
 alias setdate="ls -A | sort | xargs touch | ls -A | sort | xargs -I '{}' ~/.setfile '{}'"
 alias setalldate="ls | sort | xargs -I '{}' ~/.setdate '{}'"
-alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}'"
-alias encode320="ls | grep --colour=never '\.wav' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
-alias extractscenedl="ls *.rar | xargs -I '{}' unrar x -pscenedownloads -y '{}'"
+alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}' m3u"
+alias encode320="ls | grep --colour=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
+alias extractscenedl="ls *.rar | xargs -I '{}' unrar x -pPASSWD -y '{}'"
+alias extract="ls *.rar | xargs -I '{}' unrar x '{}'"
+alias cleardir="~/.archiverar ; mv deleted-* ~/.Trash/."
 alias catm3u="ls | xargs -I '{}' ~/.catm3u '{}'"
-alias extract="ls *.rar | grep -v download | grep -v part | xargs -I '{}' unrar x '{}'"
 alias cleardsstore="find . -name '*.DS_Store' -type f -delete"
 alias clearurls="find . -name '*.url' -type f -delete"
 alias cleartxts="find . -name '*.txt' -type f -delete"
 alias clearinfos="find . -name '*[TC]*COMPLETE*[TC]*' -type f -exec rm -f {} \;"
-alias setinfos="ls | xargs -I '{}' ~/.shared_check '{}' ; ls | xargs -I '{}' ~/.fixdir-silent '{}'"
 alias fixalldate="ls | sort | xargs -I '{}' ~/.fixdate '{}'"
+alias setinfos="ls | xargs -I '{}' ~/.shared_check '{}'"
+alias fixdirsilent="ls | xargs -I '{}' ~/.fixdir-silent '{}'"
+# extractscenedl ; cleardir ; chmod -R 751 .
+# cleardsstore ; clearurls ; cleartxts ; clearinfos ; fixdirsilent ; catm3u
+# fixalldate ; setinfos ; fixdirsilent

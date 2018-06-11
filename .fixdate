@@ -17,3 +17,5 @@ done
 /usr/bin/SetFile -m "${d}" "../$1"
 
 echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}$1${NC} ${GREEN}✓${NC}"
+
+exit 0

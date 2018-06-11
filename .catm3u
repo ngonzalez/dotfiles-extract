@@ -17,9 +17,9 @@ NC='\033[0m' # No Color
 
 cd $1
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 file1="/tmp/sc1-filecheck-$currenttime"
 file2="/tmp/sc2-filecheck-$currenttime"
+ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
 playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
 if [ ! $playlist ]; then
@@ -41,7 +41,11 @@ if [ $playlist ]; then
         if [ -f $file2 ]; then
           rm -f $file2
         fi
+    else
+        echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
     fi
 else
     echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
 fi
+
+exit 0

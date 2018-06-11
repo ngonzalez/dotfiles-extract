@@ -14,6 +14,7 @@ currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 file1="/tmp/sc1-filecheck-$currenttime"
 file2="/tmp/sc2-filecheck-$currenttime"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
+
 if [[ `ls | grep "\[$grp\]" --colour=never | wc -l | bc` > 0 ]]; then
   true
 else
@@ -58,3 +59,5 @@ else
     fi
   fi
 fi
+
+exit 0
