@@ -1,3 +1,4 @@
 #! /bin/bash
+
 cd $1
-ls -A | grep -iv complete | grep -v '\[TC\]' | sort | xargs touch | ls -A | grep -iv complete | grep -v '\[TC\]' | sort | xargs -I '{}' ~/.setfile '{}'
+ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'
