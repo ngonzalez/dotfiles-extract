@@ -23,13 +23,10 @@ alias start_ftp="/usr/local/sbin/pure-ftpd /usr/local/etc/pure-ftpd.conf"
 # alias start_mysql="sudo -u mysql mysqld_safe5"
 # alias stop_mysql="sudo -u mysql mysqladmin5 -u root -p shutdown"
 
-alias setdate="ls -A | sort | xargs touch | ls -A | sort | xargs -I '{}' ~/.setfile '{}'"
+alias setdate="ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'"
 alias setalldate="ls | sort | xargs -I '{}' ~/.setdate '{}'"
 alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}' m3u"
 alias encode320="ls | grep --colour=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
-alias extractscenedl="ls *.rar | xargs -I '{}' unrar x -pPASSWD -y '{}'"
-alias extract="ls *.rar | xargs -I '{}' unrar x '{}'"
-alias cleardir="~/.archiverar ; mv deleted-* ~/.Trash/."
 alias catm3u="ls | xargs -I '{}' ~/.catm3u '{}'"
 alias cleardsstore="find . -name '*.DS_Store' -type f -delete"
 alias clearurls="find . -name '*.url' -type f -delete"
@@ -38,6 +35,6 @@ alias clearinfos="find . -name '*[TC]*COMPLETE*[TC]*' -type f -exec rm -f {} \;"
 alias fixalldate="ls | sort | xargs -I '{}' ~/.fixdate '{}'"
 alias setinfos="ls | xargs -I '{}' ~/.shared_check '{}'"
 alias fixdirsilent="ls | xargs -I '{}' ~/.fixdir-silent '{}'"
-# extractscenedl ; cleardir ; chmod -R 751 .
-# cleardsstore ; clearurls ; cleartxts ; clearinfos ; fixdirsilent ; catm3u
+# ~/.extract ; chmod -R 0740 .
+# cleardsstore ; clearurls ; cleartxts ; clearinfos ; fixdirsilent
 # fixalldate ; setinfos ; fixdirsilent

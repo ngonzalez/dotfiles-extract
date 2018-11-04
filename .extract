@@ -1,0 +1,20 @@
+#! /bin/bash
+
+currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
+mkdir "deleted-$currenttime"
+
+count=`ls | grep '\.rar' --colour=never | wc -l`
+
+if [ ${count} -gt 0 ]; then
+  ls *.rar | xargs -I '{}' unrar x -pSCENEFiLES -y '{}'
+  mv *.rar "deleted-$currenttime"/.
+fi
+
+count=`ls | grep '\.tar' --colour=never | wc -l`
+
+if [ ${count} -gt 0 ]; then
+  ls *.tar | xargs -I '{}' tar xvf '{}'
+  mv *.tar "deleted-$currenttime"/.
+fi
+
+mv deleted-* ~/.Trash/.

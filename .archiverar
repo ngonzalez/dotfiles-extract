@@ -1,4 +1,0 @@
-#!/bin/bash
-currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-mkdir "deleted-$currenttime"
-mv *.rar "deleted-$currenttime"/.
