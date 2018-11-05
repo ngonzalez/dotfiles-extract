@@ -6,18 +6,17 @@ LIGHT_GREY='\033[0;37m'
 DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
-folder=$1
+dir=$1
 ext=$2
 
-if [ -d ${folder} ]; then
-  cd ${folder}
-  file=`ls -1a | grep -E --colour=never $ext | head -n1`
-  if [ ! -z ${file} ]; then
-    if [ -f ${file} ]; then
-      d=`/usr/bin/GetFileInfo -m "$file"`
-      /usr/bin/SetFile -d "${d}" "../$1"
-      /usr/bin/SetFile -m "${d}" "../$1"
-      echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}$1${NC} ${GREEN}✓${NC}"
+if [ -d ${dir} ]; then
+  file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
+  if [ ! -z ${dir}/${file} ]; then
+    if [ -f ${dir}/${file} ]; then
+      d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
+      /usr/bin/SetFile -d "${d}" "${dir}"
+      /usr/bin/SetFile -m "${d}" "${dir}"
+      echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
     fi
   fi
 fi

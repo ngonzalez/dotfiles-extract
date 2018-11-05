@@ -6,58 +6,56 @@ LIGHT_GREY='\033[0;37m'
 DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
-echo "--"
-echo $1
-cd $1
+dir=$1
 grp="TC"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-file1="/tmp/sc1-filecheck-$currenttime"
-file2="/tmp/sc2-filecheck-$currenttime"
+file1="/tmp/sc1-filecheck-${dir}-${currenttime}"
+file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
-if [[ `ls | grep "\[$grp\]" --colour=never | wc -l | bc` > 0 ]]; then
-  true
-else
-  playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
-  if [ ! $playlist ]; then
-    playlist=`ls | grep '\.m3u' --colour=never | head -n 1`
-  fi
-  if [ $playlist ]; then
-    if [ -f $playlist ]; then
-      ls -1a | grep -E --colour=never $ext > $file1
-      cat $playlist | grep -E $ext --colour=never > $file2
-      if [ `diff -i -B --strip-trailing-cr $file1 $file2 | wc -l | bc` == 0 ]; then
-        count=`cat $file1 | wc -l | bc`
-        if [[ `/usr/local/bin/cfv` =~ "$count OK" ]]; then
-          last_file=`cat $file1 | tail -n 1`
-          genre=`exiftool $last_file | grep Genre | awk -F ': ' '{ print $2 }'`
-          size_du=`du -s | awk '{ print $1 }' | bc`
-          size=$(( $size_du / 2048 ))
-          count_str=$count
-          count_str+="F"
-          name="[$grp] $genre - $count_str $size"MB" - COMPLETE [$grp]"
-          name="${name/\//\\}"
-          touch "${name}"
-          echo -e "${GREEN}${name}${NC}"
-          date=`/usr/bin/GetFileInfo -m $last_file`
-          `/usr/bin/SetFile -d "$date" "$name"
-          `/usr/bin/SetFile -m "$date" "$name"
-        else
-          touch "[$grp] CRC Error [$grp]"
-          echo -e "${RED}CRC Error${NC}"
-        fi
-      else
-        touch "[$grp] Missing files [$grp]"
-        echo -e "${RED}Missing files${NC}"
-      fi
-      if [ -f $file1 ]; then
-        rm -f $file1
-      fi
-      if [ -f $file2 ]; then
-        rm -f $file2
-      fi
+if [[ `ls ${dir}/ | grep "\[${grp}\]" --colour=never | wc -l | bc` -eq 0 ]]; then
+    echo "--"
+    echo ${dir}
+    playlist=`ls ${dir}/* | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
+    if [ ! ${playlist} ]; then
+      playlist=`ls ${dir}/* | grep '\.m3u' --colour=never | head -n 1`
     fi
-  fi
+    if [ ${playlist} ]; then
+        if [ -f ${playlist} ]; then
+            ls -1a ${dir} | grep -E --colour=never ${ext} > ${file1}
+            cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
+            if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
+                count=`cat ${file1} | wc -l | bc`
+                if [[ `/usr/local/bin/cfv -p ${dir}` =~ "${count} OK" ]]; then
+                    last_file=`cat ${file1} | tail -n 1`
+                    genre=`exiftool ${dir}/${last_file} | grep Genre | awk -F ': ' '{ print $2 }'`
+                    size_du=`du -s ${dir} | awk '{ print $1 }' | bc`
+                    size=$(( ${size_du} / 2048 ))
+                    count_str=${count}
+                    count_str+="F"
+                    name="[${grp}] ${genre} - ${count_str} ${size}"MB" - COMPLETE [${grp}]"
+                    name="${name/\//\\}"
+                    touch "${dir}/${name}"
+                    echo -e "${GREEN}${name}${NC}"
+                    date=`/usr/bin/GetFileInfo -m ${dir}/${last_file}`
+                    `/usr/bin/SetFile -d "${date}" "${dir}/${name}"
+                    `/usr/bin/SetFile -m "${date}" "${dir}/${name}"
+                else
+                    touch "${dir}/[${grp}] CRC Error [${grp}]"
+                    echo -e "${RED}CRC Error${NC}"
+                fi
+            else
+                touch "${dir}/[${grp}] Missing files [${grp}]"
+                echo -e "${RED}Missing files${NC}"
+            fi
+            if [ -f ${file1} ]; then
+                rm -f ${file1}
+            fi
+            if [ -f ${file2} ]; then
+                rm -f ${file2}
+            fi
+        fi
+    fi
 fi
 
 exit 0

@@ -1,8 +1,13 @@
 #! /bin/bash
-cd $1
-file=`ls | grep -E --colour=never '\.(wav|aif|aiff|flac|mp3|m4a)' | grep -iv complete | tail -1`
-if [[ $file != '' ]]; then
-  modifiedDate=`/usr/bin/GetFileInfo -m "$file"`
-  /usr/bin/SetFile -d "$modifiedDate" "../$1"
-  /usr/bin/SetFile -m "$modifiedDate" "../$1"
+
+dir=$1
+ext='\.(wav|aif|aiff|flac|mp3|m4a)'
+
+if [ -d ${dir} ]; then
+  file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
+  d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
+  /usr/bin/SetFile -d "${d}" "${dir}"
+  /usr/bin/SetFile -m "${d}" "${dir}"
 fi
+
+exit 0

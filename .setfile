@@ -1,4 +1,5 @@
 #! /bin/bash
 
-modifiedDate=`/usr/bin/GetFileInfo -m $1`
-/usr/bin/SetFile -d "$modifiedDate" $1
+dir=$1
+d=`/usr/bin/GetFileInfo -m ${dir}`
+/usr/bin/SetFile -d "${d}" ${dir}

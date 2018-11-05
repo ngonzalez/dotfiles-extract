@@ -6,15 +6,17 @@ mkdir "deleted-$currenttime"
 count=`ls | grep '\.rar' --colour=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
-  ls *.rar | xargs -I '{}' unrar x -pSCENEFiLES -y '{}'
+  ls *.rar | xargs -I '{}' unrar x -y '{}' 1>/dev/null
   mv *.rar "deleted-$currenttime"/.
 fi
 
 count=`ls | grep '\.tar' --colour=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
-  ls *.tar | xargs -I '{}' tar xvf '{}'
+  ls *.tar | xargs -I '{}' tar xvf '{}' 1>/dev/null
   mv *.tar "deleted-$currenttime"/.
 fi
 
 mv deleted-* ~/.Trash/.
+
+exit 0

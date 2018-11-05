@@ -15,37 +15,38 @@ LIGHT_GREY='\033[0;37m'
 DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
-cd $1
+dir=$1
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-file1="/tmp/sc1-filecheck-$currenttime"
-file2="/tmp/sc2-filecheck-$currenttime"
+file1="/tmp/sc1-filecheck-${dir}-$currenttime"
+file2="/tmp/sc2-filecheck-${dir}-$currenttime"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
-playlist=`ls | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
+playlist=`ls ${dir}/* | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
 if [ ! $playlist ]; then
-  playlist=`ls | grep '\.m3u' --colour=never | head -n 1`
+    playlist=`ls ${dir}/* | grep '\.m3u' --colour=never | head -n 1`
 fi
-if [ $playlist ]; then
-    if [ -f $playlist ]; then
-        ls -1a | grep -E --colour=never $ext > $file1
-        cat $playlist | grep -E $ext --colour=never > $file2
-        if [ `diff -i -B --strip-trailing-cr $file1 $file2 | wc -l | bc` != 0 ]; then
-          echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
-          echo -e "${RED}$(diff $playlist $file1)${NC}"
+if [ ${playlist} ]; then
+    if [ -f ${playlist} ]; then
+        ls -1a ${dir} | grep -E --colour=never ${ext} > ${file1}
+        cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
+        if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` != 0 ]; then
+            echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
+            echo -e "${RED}$(diff ${playlist} ${file1})${NC}"
         else
-          echo -e "${DARK_GREY}$1${NC} ${GREEN}OK${NC}"
-        fi
-        if [ -f $file1 ]; then
-          rm -f $file1
-        fi
-        if [ -f $file2 ]; then
-          rm -f $file2
+            echo -e "${DARK_GREY}${dir}${NC} ${GREEN}OK${NC}"
         fi
     else
-        echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
+        echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}M3U: not found${NC}"
     fi
 else
-    echo -e "${DARK_GREY}$1${NC} ${LIGHT_GREY}M3U: not found${NC}"
+    echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}M3U: not found${NC}"
+fi
+
+if [ -f ${file1} ]; then
+    rm -f ${file1}
+fi
+if [ -f ${file2} ]; then
+    rm -f ${file2}
 fi
 
 exit 0
