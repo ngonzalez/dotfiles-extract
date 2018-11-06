@@ -4,10 +4,10 @@ dir=$1
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
 if [ -d ${dir} ]; then
-  file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
-  d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
-  /usr/bin/SetFile -d "${d}" "${dir}"
-  /usr/bin/SetFile -m "${d}" "${dir}"
+    file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
+    d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
+    /usr/bin/SetFile -d "${d}" "${dir}"
+    /usr/bin/SetFile -m "${d}" "${dir}"
 fi
 
 exit 0

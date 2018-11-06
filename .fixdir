@@ -9,16 +9,26 @@ NC='\033[0m' # No Color
 dir=$1
 ext=$2
 
+if [ -z ${dir} ]; then
+    echo "Missing directory parameter. Usage: ~/.fixdir <DIRECTORY> <EXTENSION>"
+    exit 1
+fi
+
+if [ -z ${ext} ]; then
+    echo "Missing extension parameter. Usage: ~/.fixdir <DIRECTORY> <EXTENSION>"
+    exit 1
+fi
+
 if [ -d ${dir} ]; then
-  file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
-  if [ ! -z ${dir}/${file} ]; then
-    if [ -f ${dir}/${file} ]; then
-      d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
-      /usr/bin/SetFile -d "${d}" "${dir}"
-      /usr/bin/SetFile -m "${d}" "${dir}"
-      echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
+    file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
+    if [ ! -z ${dir}/${file} ]; then
+        if [ -f ${dir}/${file} ]; then
+            d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
+            /usr/bin/SetFile -d "${d}" "${dir}"
+            /usr/bin/SetFile -m "${d}" "${dir}"
+            echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
+        fi
     fi
-  fi
 fi
 
 exit 0

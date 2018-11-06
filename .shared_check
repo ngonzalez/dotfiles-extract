@@ -26,7 +26,7 @@ if [[ `ls ${dir}/ | grep "\[${grp}\]" --colour=never | wc -l | bc` -eq 0 ]]; the
             cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
             if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
                 count=`cat ${file1} | wc -l | bc`
-                if [[ `/usr/local/bin/cfv -p ${dir}` =~ "${count} OK" ]]; then
+                if [[ `cfv -p ${dir}` =~ "${count} OK" ]]; then
                     last_file=`cat ${file1} | tail -n 1`
                     genre=`exiftool ${dir}/${last_file} | grep Genre | awk -F ': ' '{ print $2 }'`
                     size_du=`du -s ${dir} | awk '{ print $1 }' | bc`

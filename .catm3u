@@ -31,7 +31,7 @@ if [ ${playlist} ]; then
         cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
         if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` != 0 ]; then
             echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
-            echo -e "${RED}$(diff ${playlist} ${file1})${NC}"
+            echo -e "${RED}$(diff ${file1} ${file2})${NC}"
         else
             echo -e "${DARK_GREY}${dir}${NC} ${GREEN}OK${NC}"
         fi
