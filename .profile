@@ -5,6 +5,7 @@ export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 export LESS='-R'
 export GOPATH='/Users/enyo/Library/go'
 export PS1="\u:\w\$(git branch 2>/dev/null | grep --colour=never -e '\* ' | sed 's/^..\(.*\)/ (\[\033[0;32m\]\1\[\033[0m\])/') $ "
+export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 
 alias ls="ls -1"
 alias l="ls -alrtTGh"
