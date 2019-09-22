@@ -7,9 +7,10 @@ DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
 dir=$1
-d=`/usr/bin/GetFileInfo -m "${dir}"`
+grp="TC"
+d=`/usr/bin/GetFileInfo -d "${dir}"`
 
-for i in $(ls -Ap ${dir} | grep -v / | sort); do
+for i in $(ls -Ap ${dir} | grep -v / | grep -v -e "^\[${grp}\]" | sort); do
     /usr/bin/SetFile -d "${d}" ${dir}/${i}
     /usr/bin/SetFile -m "${d}" ${dir}/${i}
 done
