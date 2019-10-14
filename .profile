@@ -4,7 +4,7 @@ export CLICOLOR=1
 export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
 export LESS='-R'
 export GOPATH='/Users/enyo/Library/go'
-export PS1="\u:\w\$(git branch 2>/dev/null | grep --colour=never -e '\* ' | sed 's/^..\(.*\)/ (\[\033[0;32m\]\1\[\033[0m\])/') $ "
+export PS1="\u:\w\$(git branch 2>/dev/null | grep --color=never -e '\* ' | sed 's/^..\(.*\)/ (\[\033[0;32m\]\1\[\033[0m\])/') $ "
 export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 
 alias ls="ls -1"
@@ -22,7 +22,7 @@ alias sql="psql -U enyo postgres"
 alias setdate="ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'"
 alias setalldate="ls | sort | xargs -I '{}' ~/.setdate '{}'"
 alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}' m3u"
-alias encode320="ls | grep --colour=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
+alias encode320="ls | grep --color=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
 alias catm3u="ls | xargs -I '{}' ~/.catm3u '{}'"
 alias catsfv="ls | xargs -I '{}' ~/.catsfv '{}'"
 alias catnfo="ls | xargs -I '{}' ~/.catnfo '{}'"

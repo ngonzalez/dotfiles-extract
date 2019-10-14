@@ -6,7 +6,7 @@ ext='\.(wav)'
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 mkdir "${dir}/wav-${currenttime}"
 
-for i in $(ls -1a ${dir} | grep -E --colour=never ${ext}); do
+for i in $(ls -1a ${dir} | grep -E --color=never ${ext}); do
     `ffmpeg -i ${dir}/${i} ${dir}/${i/wav/aiff} -loglevel 0`
     `mv ${dir}/${i} ${dir}/wav-${currenttime}`
 done

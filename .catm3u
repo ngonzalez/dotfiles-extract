@@ -21,14 +21,14 @@ file1="/tmp/sc1-filecheck-${dir}-$currenttime"
 file2="/tmp/sc2-filecheck-${dir}-$currenttime"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
-playlist=`ls ${dir}/* | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
+playlist=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
 if [ ! $playlist ]; then
-    playlist=`ls ${dir}/* | grep '\.m3u' --colour=never | head -n 1`
+    playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
 fi
 if [ ${playlist} ]; then
     if [ -f ${playlist} ]; then
-        ls -1a ${dir} | grep -E --colour=never ${ext} > ${file1}
-        cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
+        ls -1a ${dir} | grep -E --color=never ${ext} > ${file1}
+        cat ${playlist} | grep -E ${ext} --color=never > ${file2}
         if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` != 0 ]; then
             echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
             echo -e "${RED}$(diff ${file1} ${file2})${NC}"

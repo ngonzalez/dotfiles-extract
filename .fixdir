@@ -20,7 +20,7 @@ if [ -z ${ext} ]; then
 fi
 
 if [ -d ${dir} ]; then
-    file=`ls -1a ${dir} | grep -E --colour=never ${ext} | head -n1`
+    file=`ls -1a ${dir} | grep -E --color=never ${ext} | head -n1`
     if [ ! -z ${dir}/${file} ]; then
         if [ -f ${dir}/${file} ]; then
             d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`

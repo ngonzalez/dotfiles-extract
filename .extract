@@ -3,14 +3,14 @@
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 mkdir "deleted-${currenttime}"
 
-count=`ls | grep '\.rar' --colour=never | wc -l`
+count=`ls | grep '\.rar' --color=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
     ls *.rar | xargs -I '{}' unrar x -y '{}' 1>/dev/null
     mv *.rar "deleted-${currenttime}"
 fi
 
-count=`ls | grep '\.tar' --colour=never | wc -l`
+count=`ls | grep '\.tar' --color=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
     ls *.tar | xargs -I '{}' tar xvf '{}' 1>/dev/null
