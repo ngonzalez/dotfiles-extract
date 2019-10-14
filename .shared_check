@@ -7,16 +7,27 @@ DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
 dir=$1
+
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: ~/.shared_check <DIRECTORY>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
 grp="TC"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 file1="/tmp/sc1-filecheck-${dir}-${currenttime}"
 file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
-if [[ `ls ${dir}/ | grep "\[${grp}\]" --color=never | wc -l | bc` -eq 0 ]]; then
-    if [[ `ls ${dir}/ | wc -l | bc` -eq 0 ]]; then
-        exit 0
-    fi
+if [[ `ls "${dir}/" | grep "\[${grp}\]" --color=never | wc -l | bc` -eq 0 ]]; then
     playlist=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
     if [ ! ${playlist} ]; then
       playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`

@@ -21,7 +21,7 @@ alias sql="psql -U enyo postgres"
 
 alias setdate="ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'"
 alias setalldate="ls | sort | xargs -I '{}' ~/.setdate '{}'"
-alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}' m3u"
+alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}'"
 alias encode320="ls | grep --color=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"
 alias catm3u="ls | xargs -I '{}' ~/.catm3u '{}'"
 alias catsfv="ls | xargs -I '{}' ~/.catsfv '{}'"

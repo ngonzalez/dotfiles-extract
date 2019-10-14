@@ -8,6 +8,19 @@ NC='\033[0m' # No Color
 
 dir=$1
 
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: ~/.catcue <DIRECTORY>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
 for i in $(ls ${dir}/* | grep '\.cue' --color=never | sort); do
     file=`cat ${i} | grep "FILE" --color=never | cut -d\" -f2`
     if [ -f "${dir}/${file}" ]; then

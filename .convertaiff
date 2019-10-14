@@ -1,8 +1,21 @@
 #! /bin/bash
 
 dir=$1
-ext='\.(wav)'
 
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: ~/.convertaiff <DIRECTORY>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
+ext='\.(wav)'
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 mkdir "${dir}/wav-${currenttime}"
 

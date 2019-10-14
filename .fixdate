@@ -7,6 +7,20 @@ DARK_GREY='\033[1;30m'
 NC='\033[0m' # No Color
 
 dir=$1
+
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: ~/.fixdate <DIRECTORY>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
 grp="TC"
 d=`/usr/bin/GetFileInfo -d "${dir}"`
 

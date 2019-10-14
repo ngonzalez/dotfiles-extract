@@ -1,4 +1,23 @@
 #! /bin/bash
 
-cd $1
-ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'
+dir=$1
+
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: ~/.setdate <DIRECTORY>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
+grp="TC"
+find "${dir}" -name '*[${grp}]*COMPLETE*[${grp}]*' -type f -delete
+ls -Ap "${dir}/*" | sort | xargs touch
+ls -Ap "${dir}/*" | sort | xargs -I '{}' ~/.setfile '{}'
+
+exit 0
