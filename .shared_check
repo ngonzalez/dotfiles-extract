@@ -14,13 +14,16 @@ file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
 if [[ `ls ${dir}/ | grep "\[${grp}\]" --colour=never | wc -l | bc` -eq 0 ]]; then
-    echo "--"
-    echo ${dir}
+    if [[ `ls ${dir}/ | wc -l | bc` -eq 0 ]]; then
+        exit 0
+    fi
     playlist=`ls ${dir}/* | grep -E '^0{2,3}' --colour=never | grep '\.m3u' --colour=never`
     if [ ! ${playlist} ]; then
       playlist=`ls ${dir}/* | grep '\.m3u' --colour=never | head -n 1`
     fi
     if [ ${playlist} ]; then
+        echo "--"
+        echo ${dir}
         if [ -f ${playlist} ]; then
             ls -1a ${dir} | grep -E --colour=never ${ext} > ${file1}
             cat ${playlist} | grep -E ${ext} --colour=never > ${file2}
