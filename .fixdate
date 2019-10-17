@@ -21,10 +21,13 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-grp="TC"
+if [ -z "${GRP}" ]; then
+    find "${dir}" -name '*[${GRP}]*COMPLETE*[${GRP}]*' -type f -delete
+fi
+
 d=`/usr/bin/GetFileInfo -d "${dir}"`
 
-for i in $(ls -Ap ${dir} | grep -v / | grep -v -e "^\[${grp}\]" | sort); do
+for i in $(ls -Ap ${dir} | grep -v / | sort); do
     /usr/bin/SetFile -d "${d}" ${dir}/${i}
     /usr/bin/SetFile -m "${d}" ${dir}/${i}
 done

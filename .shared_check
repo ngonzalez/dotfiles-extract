@@ -21,13 +21,12 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-grp="TC"
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 file1="/tmp/sc1-filecheck-${dir}-${currenttime}"
 file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
-if [[ `ls "${dir}/" | grep "\[${grp}\]" --color=never | wc -l | bc` -eq 0 ]]; then
+if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
     playlist=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
     if [ ! ${playlist} ]; then
       playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
@@ -47,7 +46,7 @@ if [[ `ls "${dir}/" | grep "\[${grp}\]" --color=never | wc -l | bc` -eq 0 ]]; th
                     size=$(( ${size_du} / 2048 ))
                     count_str=${count}
                     count_str+="F"
-                    name="[${grp}] ${genre} - ${count_str} ${size}"MB" - COMPLETE [${grp}]"
+                    name="[${GRP}] ${genre} - ${count_str} ${size}"MB" - COMPLETE [${GRP}]"
                     name="${name/\//\\}"
                     touch "${dir}/${name}"
                     echo -e "${GREEN}${name}${NC}"
@@ -55,11 +54,11 @@ if [[ `ls "${dir}/" | grep "\[${grp}\]" --color=never | wc -l | bc` -eq 0 ]]; th
                     `/usr/bin/SetFile -d "${date}" "${dir}/${name}"
                     `/usr/bin/SetFile -m "${date}" "${dir}/${name}"
                 else
-                    touch "${dir}/[${grp}] CRC Error [${grp}]"
+                    touch "${dir}/[${GRP}] CRC Error [${GRP}]"
                     echo -e "${RED}CRC Error${NC}"
                 fi
             else
-                touch "${dir}/[${grp}] Missing files [${grp}]"
+                touch "${dir}/[${GRP}] Missing files [${GRP}]"
                 echo -e "${RED}Missing files${NC}"
             fi
             if [ -f ${file1} ]; then
