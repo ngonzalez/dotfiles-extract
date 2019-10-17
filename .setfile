@@ -1,21 +1,17 @@
 #! /bin/bash
 
-dir=$1
+file=$1
 
-if [ -z "${dir}" ]; then
-    echo "Missing directory parameter. Usage: ~/.setfile <DIRECTORY>"
+if [ -z "${file}" ]; then
+    echo "Missing file parameter. Usage: ~/.setfile <FILE>"
     exit 1
 fi
 
-if [ ! -d "${dir}" ]; then
+if [ ! -f "${file}" ]; then
     exit 1
 fi
 
-if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
-    exit 1
-fi
-
-d=`/usr/bin/GetFileInfo -m ${dir}`
-/usr/bin/SetFile -d "${d}" ${dir}
+d=`/usr/bin/GetFileInfo -m ${file}`
+/usr/bin/SetFile -d "${d}" ${file}
 
 exit 0
