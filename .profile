@@ -19,7 +19,7 @@ alias stop_pgsql="pg_ctl -D /usr/local/var/postgres -l /tmp/postgresql.log stop"
 # After PostgreSQL Upgrade: rm -rf /usr/local/var/postgres ; initdb /usr/local/var/postgres -E utf8"
 alias sql="psql -U enyo postgres"
 
-alias setdate="ls -Ap | grep -v / | sort | xargs touch | ls -Ap | grep -v / | sort | xargs -I '{}' ~/.setfile '{}'"
+alias setdate="~/.setdate ."
 alias setalldate="ls | sort | xargs -I '{}' ~/.setdate '{}'"
 alias fixdir="ls | xargs -I '{}' ~/.fixdir '{}'"
 alias encode320="ls | grep --color=never '\.aiff' | sort | xargs -I '{}' lame -b 320 -ms '{}'"

@@ -17,7 +17,8 @@ fi
 
 grp="TC"
 find "${dir}" -name '*[${grp}]*COMPLETE*[${grp}]*' -type f -delete
-ls -Ap "${dir}/*" | sort | xargs touch
-ls -Ap "${dir}/*" | sort | xargs -I '{}' ~/.setfile '{}'
+
+ls -Ap ${dir}/* | sort | xargs touch
+ls -Ap ${dir}/* | sort | xargs -I '{}' ~/.setfile '{}'
 
 exit 0
