@@ -15,17 +15,11 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-ext='\.(wav|aif|aiff|flac|mp3|m4a|sfv)'
-
 if [ -d ${dir} ]; then
-    file=`ls -1a ${dir} | grep -E --color=never ${ext} | head -n1`
-    if [ ! -z ${dir}/${file} ]; then
-        if [ -f ${dir}/${file} ]; then
-            d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
-            /usr/bin/SetFile -d "${d}" "${dir}"
-            /usr/bin/SetFile -m "${d}" "${dir}"
-        fi
-    fi
+    file=`ls -1a ${dir} | grep -v -e "^\[${GRP}\]" | tail -n1`
+    d=`/usr/bin/GetFileInfo -m "${dir}/${file}"`
+    /usr/bin/SetFile -d "${d}" "${dir}"
+    /usr/bin/SetFile -m "${d}" "${dir}"
 fi
 
 exit 0
