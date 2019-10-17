@@ -15,8 +15,8 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-if [ -z "${GRP}" ]; then
-    find "${dir}" -name '*[${GRP}]*COMPLETE*[${GRP}]*' -type f -delete
+if [ ! -z ${GRP} ]; then
+    find "${dir}" -name "*[${GRP}]*COMPLETE*[${GRP}]*" -type f -delete
 fi
 
 ls -Ap ${dir}/* | sort | xargs touch
