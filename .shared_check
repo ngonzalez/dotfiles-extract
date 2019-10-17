@@ -21,6 +21,11 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
+if [ -z "${GRP}" ]; then
+    echo "Missing GRP"
+    exit 1
+fi
+
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 file1="/tmp/sc1-filecheck-${dir}-${currenttime}"
 file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
