@@ -21,13 +21,9 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-if [ ! -z "${GRP}" ]; then
-    find "${dir}" -name '*[${GRP}]*COMPLETE*[${GRP}]*' -type f -delete
-fi
-
 d=`/usr/bin/GetFileInfo -d "${dir}"`
 
-for i in $(ls -Ap ${dir} | grep -v / | sort); do
+for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]" | sort); do
     /usr/bin/SetFile -d "${d}" ${dir}/${i}
     /usr/bin/SetFile -m "${d}" ${dir}/${i}
 done
@@ -35,6 +31,6 @@ done
 /usr/bin/SetFile -d "${d}" "${dir}"
 /usr/bin/SetFile -m "${d}" "${dir}"
 
-echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}$1${NC} ${GREEN}✓${NC}"
+echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
 
 exit 0

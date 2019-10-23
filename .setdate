@@ -1,5 +1,11 @@
 #! /bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+LIGHT_GREY='\033[0;37m'
+DARK_GREY='\033[1;30m'
+NC='\033[0m' # No Color
+
 dir=$1
 
 if [ -z "${dir}" ]; then
@@ -15,11 +21,16 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-if [ ! -z ${GRP} ]; then
-    find "${dir}" -name "*[${GRP}]*COMPLETE*[${GRP}]*" -type f -delete
-fi
+for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]" | sort); do
+    touch ${dir}/${i}
+    ~/.setfile ${dir}/${i}
+done
 
-ls -Ap ${dir}/* | sort | xargs touch
-ls -Ap ${dir}/* | sort | xargs -I '{}' ~/.setfile '{}'
+touch ${dir}
+~/.setfile ${dir}
+
+d=`/usr/bin/GetFileInfo -d "${dir}"`
+
+echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
 
 exit 0

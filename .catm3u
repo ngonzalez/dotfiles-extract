@@ -26,6 +26,7 @@ file1="/tmp/sc1-filecheck-${dir}-$currenttime"
 file2="/tmp/sc2-filecheck-${dir}-$currenttime"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 playlist=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
+d=`/usr/bin/GetFileInfo -d "${dir}"`
 
 if [ ! $playlist ]; then
     playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
@@ -35,16 +36,16 @@ if [ ${playlist} ]; then
         ls -1a ${dir} | grep -E --color=never ${ext} > ${file1}
         cat ${playlist} | grep -E ${ext} --color=never > ${file2}
         if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` != 0 ]; then
-            echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}$(file $playlist)${NC}"
-            echo -e "${RED}$(diff ${file1} ${file2})${NC}"
+            echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${RED}✖${NC}"
+            echo -e "${LIGHT_GREY}$(diff ${file1} ${file2})${NC}"
         else
-            echo -e "${DARK_GREY}${dir}${NC} ${GREEN}OK${NC}"
+            echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
         fi
     else
-        echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}M3U: not found${NC}"
+        echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${RED}✖${NC}"
     fi
 else
-    echo -e "${DARK_GREY}${dir}${NC} ${LIGHT_GREY}M3U: not found${NC}"
+    echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${RED}✖${NC}"
 fi
 
 if [ -f ${file1} ]; then
