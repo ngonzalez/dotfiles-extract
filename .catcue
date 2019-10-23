@@ -21,10 +21,12 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
+d=`/usr/bin/GetFileInfo -d "${dir}"`
+
 for i in $(ls ${dir}/* | grep '\.cue' --color=never | sort); do
     file=`cat ${i} | grep "FILE" --color=never | cut -d\" -f2`
     if [ -f "${dir}/${file}" ]; then
-        echo -e "${DARK_GREY}${i}${NC} ${GREEN}OK${NC}"
+        echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${file} ${GREEN}✓${NC}"
     else
         echo -e "${RED}${dir}: ${file} not found${NC}"
     fi
