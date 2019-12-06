@@ -21,7 +21,7 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]" | sort); do
+for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]" | sort -r); do
     touch ${dir}/${i}
     ~/.setfile ${dir}/${i}
 done
@@ -30,7 +30,6 @@ touch ${dir}
 ~/.setfile ${dir}
 
 d=`/usr/bin/GetFileInfo -d "${dir}"`
-
 echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
 
 exit 0

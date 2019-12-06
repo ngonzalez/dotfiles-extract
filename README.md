@@ -1,7 +1,7 @@
 # dotfiles
 
 ```bash
-~/.extract ; chmod -R 0740 .
+~/.extract
 cleardsstore ; clearurls ; cleartxts ; clearinfos
 fixdirsilent ; fixalldate ; setinfos ; fixdirsilent
 ```

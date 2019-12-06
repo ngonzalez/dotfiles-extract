@@ -27,8 +27,9 @@ if [ -z "${GRP}" ]; then
 fi
 
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-file1="/tmp/sc1-filecheck-${dir}-${currenttime}"
-file2="/tmp/sc2-filecheck-${dir}-${currenttime}"
+dir_name=${dir//[^[:alnum:]]/}
+file1="/tmp/sc1-filecheck-${dir_name}-${currenttime}"
+file2="/tmp/sc2-filecheck-${dir_name}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
 if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
@@ -40,31 +41,29 @@ if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; th
         echo "--"
         echo ${dir}
         if [ -f ${playlist} ]; then
-            ls -1a ${dir} | grep -E --color=never ${ext} > ${file1}
+            ls -1a ${dir} | grep -E ${ext} --color=never > ${file1}
             cat ${playlist} | grep -E ${ext} --color=never > ${file2}
             if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
                 count=`cat ${file1} | wc -l | bc`
                 if [[ `cfv -p ${dir}` =~ "${count} OK" ]]; then
-                    last_file=`cat ${file1} | tail -n 1`
-                    genre=`exiftool ${dir}/${last_file} | grep Genre | awk -F ': ' '{ print $2 }'`
+                    file=`cat ${file1} | tail -n 1`
+                    genre=`exiftool ${dir}/${file} | grep Genre | awk -F ': ' '{ print $2 }'`
                     size_du=`du -s ${dir} | awk '{ print $1 }' | bc`
                     size=$(( ${size_du} / 2048 ))
-                    count_str=${count}
-                    count_str+="F"
-                    name="[${GRP}] ${genre} - ${count_str} ${size}"MB" - COMPLETE [${GRP}]"
+                    name="[${GRP}] ${genre} - ${count}"F" ${size}"MB" - COMPLETE [${GRP}]"
                     name="${name/\//\\}"
+                    date=`/usr/bin/GetFileInfo -m ${dir}/${file}`
                     touch "${dir}/${name}"
+                    `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
+                    `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
                     echo -e "${GREEN}${name}${NC}"
-                    date=`/usr/bin/GetFileInfo -m ${dir}/${last_file}`
-                    `/usr/bin/SetFile -d "${date}" "${dir}/${name}"
-                    `/usr/bin/SetFile -m "${date}" "${dir}/${name}"
                 else
                     touch "${dir}/[${GRP}] CRC Error [${GRP}]"
                     echo -e "${RED}CRC Error${NC}"
                 fi
             else
-                touch "${dir}/[${GRP}] Missing files [${GRP}]"
-                echo -e "${RED}Missing files${NC}"
+                touch "${dir}/[${GRP}] Invalid number of files [${GRP}]"
+                echo -e "${RED}Invalid number of files${NC}"
             fi
             if [ -f ${file1} ]; then
                 rm -f ${file1}

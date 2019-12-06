@@ -21,16 +21,13 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-d=`/usr/bin/GetFileInfo -d "${dir}"`
+date=`/usr/bin/GetFileInfo -d "${dir}"`
 
-for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]" | sort); do
-    /usr/bin/SetFile -d "${d}" ${dir}/${i}
-    /usr/bin/SetFile -m "${d}" ${dir}/${i}
+for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]"); do
+    /usr/bin/SetFile -d "${date}" ${dir}/${i}
+    /usr/bin/SetFile -m "${date}" ${dir}/${i}
 done
 
-/usr/bin/SetFile -d "${d}" "${dir}"
-/usr/bin/SetFile -m "${d}" "${dir}"
-
-echo -e "${DARK_GREY}${d} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
+echo -e "${DARK_GREY}${date} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
 
 exit 0
