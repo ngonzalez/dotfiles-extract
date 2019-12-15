@@ -13,7 +13,7 @@ fi
 count=`ls | grep '\.tar' --color=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
-    ls *.tar | xargs -I '{}' tar xvf '{}' 1>/dev/null
+    ls *.tar | xargs -I '{}' tar xf '{}' 1>/dev/null
     mv *.tar "deleted-${currenttime}"
 fi
 
