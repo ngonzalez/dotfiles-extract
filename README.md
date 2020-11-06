@@ -1,9 +1,21 @@
-
+##### dependencies
 ```bash
 # install brew https://brew.sh
-mkdir -p ~/Sites/dotfiles
+```
+
+```bash
 brew install git
+```
+
+```
+mkdir -p ~/Sites/dotfiles
+```
+
+```
 ln -s ~/Sites/dotfiles/.gitconfig ~/.gitconfig
+```
+
+```bash
 git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
 ```
 
