@@ -1,7 +1,7 @@
 
 ```bash
 # install brew https://brew.sh
-mkdir ~/Sites/dotfiles
+mkdir -p ~/Sites/dotfiles
 brew install git
 ln -s ~/Sites/dotfiles/.gitconfig ~/.gitconfig
 git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
