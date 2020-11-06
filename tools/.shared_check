@@ -38,8 +38,6 @@ if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; th
       playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
     fi
     if [ ${playlist} ]; then
-        echo "--"
-        echo ${dir}
         if [ -f ${playlist} ]; then
             ls -1a ${dir} | grep -E ${ext} --color=never > ${file1}
             cat ${playlist} | grep -E ${ext} --color=never > ${file2}
