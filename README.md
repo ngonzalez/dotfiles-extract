@@ -1,14 +1,10 @@
+
 ```bash
+# install brew https://brew.sh
 mkdir ~/Sites/dotfiles
-git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
-```
-
-```bash
-ln -s ~/Sites/dotfiles/.zshrc ~/.zshrc
-```
-
-```bash
+brew install git
 ln -s ~/Sites/dotfiles/.gitconfig ~/.gitconfig
+git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
 ```
 
 ##### extraction scripts
