@@ -11,13 +11,14 @@ brew install git
 mkdir -p ~/Sites/dotfiles
 ```
 
+```bash
+git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
+```
+
 ```
 ln -s ~/Sites/dotfiles/.gitconfig ~/.gitconfig
 ```
 
-```bash
-git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
-```
 
 ##### extraction scripts
 ```bash
