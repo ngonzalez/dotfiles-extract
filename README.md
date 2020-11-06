@@ -17,3 +17,8 @@ ln -s ~/Sites/dotfiles/tools ~/.tools
 ln -s ~/Sites/dotfiles/.extract.sh /usr/local/bin/extract
 chmod 0755 /usr/local/bin/extract
 ```
+
+##### from command line
+```bash
+$ extract
+```
