@@ -1,4 +1,9 @@
 ```bash
+mkdir ~/Sites/dotfiles
+git clone git@github.com:ngonzalez/dotfiles.git ~/Sites/dotfiles
+```
+
+```bash
 ln -s ~/Sites/dotfiles/.zshrc ~/.zshrc
 ```
 
