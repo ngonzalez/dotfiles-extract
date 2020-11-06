@@ -1,0 +1,5 @@
+
+alias start_pgsql="pg_ctl -D /usr/local/var/postgres -l /tmp/postgresql.log start ; tail -f /tmp/postgresql.log"
+alias stop_pgsql="pg_ctl -D /usr/local/var/postgres -l /tmp/postgresql.log stop"
+# After PostgreSQL Upgrade: rm -rf /usr/local/var/postgres ; initdb /usr/local/var/postgres -E utf8"
+alias sql="psql -U enyo postgres"
