@@ -28,6 +28,6 @@ for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]"); do
     /usr/bin/SetFile -m "${date}" ${dir}/${i}
 done
 
-echo -e "${DARK_GREY}${date} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
+echo "${DARK_GREY}${date} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
 
 exit 0

@@ -1,8 +1,10 @@
+#! /bin/bash
+
 # GROUP_NAME
 export GRP="GROUP_NAME"
 
 # extract
-. ~/.tools/.extract
+sh ~/.tools/.extract
 
 # clear files
 find . -name '*.DS_Store' -type f -delete
@@ -14,9 +16,10 @@ find . -name \"*[${GRP}]*COMPLETE*[${GRP}]*\" -type f -delete
 
 # set dates on directories with COMPLETE tags
 for i in $(ls); do
-  echo "${i}"
-  . ~/.tools/.fixdir-silent "${i}"
-  . ~/.tools/.fixdate "${i}"
-  . ~/.tools/.shared_check "${i}"
-  . ~/.tools/.fixdir-silent "${i}"
+  sh ~/.tools/.fixdir-silent "${i}"
+  sh ~/.tools/.fixdate "${i}"
+  sh ~/.tools/.shared_check "${i}"
+  sh ~/.tools/.fixdir-silent "${i}"
 done
+
+exit 0
