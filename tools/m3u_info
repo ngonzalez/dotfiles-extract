@@ -54,14 +54,14 @@ if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; th
                     touch "${dir}/${name}"
                     `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
                     `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
-                    echo "${GREEN}${name}${NC}"
+                    echo -e "${GREEN}${name}${NC}"
                 else
                     touch "${dir}/[${GRP}] CRC Error [${GRP}]"
-                    echo "${RED}CRC Error${NC}"
+                    echo -e "${RED}CRC Error${NC}"
                 fi
             else
                 touch "${dir}/[${GRP}] Invalid number of files [${GRP}]"
-                echo "${RED}Invalid number of files${NC}"
+                echo -e "${RED}Invalid number of files${NC}"
             fi
             if [ -f ${file1} ]; then
                 rm -f ${file1}

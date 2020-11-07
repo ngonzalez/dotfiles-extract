@@ -18,7 +18,7 @@ find . -name \"*[${GRP}]*COMPLETE*[${GRP}]*\" -type f -delete
 for i in $(ls); do
   fixdir "${i}"
   fixdate "${i}"
-  shared_check "${i}"
+  m3u_info "${i}"
   fixdir "${i}"
 done
 
