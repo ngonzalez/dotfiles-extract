@@ -3,8 +3,8 @@
 # GROUP_NAME
 export GRP="GROUP_NAME"
 
-# extract
-sh ~/.tools/.extract
+# uncompress
+uncompress
 
 # clear files
 find . -name '*.DS_Store' -type f -delete
@@ -16,10 +16,10 @@ find . -name \"*[${GRP}]*COMPLETE*[${GRP}]*\" -type f -delete
 
 # set dates on directories with COMPLETE tags
 for i in $(ls); do
-  sh ~/.tools/.fixdir-silent "${i}"
-  sh ~/.tools/.fixdate "${i}"
-  sh ~/.tools/.shared_check "${i}"
-  sh ~/.tools/.fixdir-silent "${i}"
+  fixdir "${i}"
+  fixdate "${i}"
+  shared_check "${i}"
+  fixdir "${i}"
 done
 
 exit 0
