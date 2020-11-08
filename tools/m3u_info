@@ -9,7 +9,7 @@ NC='\033[0m' # No Color
 dir=$1
 
 if [ -z "${dir}" ]; then
-    echo "Missing directory parameter. Usage: ~/.shared_check <DIRECTORY>"
+    echo "Missing directory parameter. Usage: m3u_info <DIRECTORY>"
     exit 1
 fi
 
@@ -33,14 +33,14 @@ file2="/tmp/sc2-filecheck-${dir_name}-${currenttime}"
 ext='\.(wav|aif|aiff|flac|mp3|m4a)'
 
 if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
-    playlist=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
-    if [ ! ${playlist} ]; then
-      playlist=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
+    m3u_file=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
+    if [ ! ${m3u_file} ]; then
+      m3u_file=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
     fi
-    if [ ${playlist} ]; then
-        if [ -f ${playlist} ]; then
+    if [ ${m3u_file} ]; then
+        if [ -f ${m3u_file} ]; then
             ls -1a ${dir} | grep -E ${ext} --color=never > ${file1}
-            cat ${playlist} | grep -E ${ext} --color=never > ${file2}
+            cat ${m3u_file} | grep -E ${ext} --color=never > ${file2}
             if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
                 count=`cat ${file1} | wc -l | bc`
                 if [[ `cfv -p ${dir}` =~ "${count} OK" ]]; then
@@ -50,10 +50,10 @@ if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; th
                     size=$(( ${size_du} / 2048 ))
                     name="[${GRP}] ${genre} - ${count}"F" ${size}"MB" - COMPLETE [${GRP}]"
                     name="${name/\//\\}"
-                    date=`/usr/bin/GetFileInfo -m ${dir}/${file}`
+                    # date=`/usr/bin/GetFileInfo -m ${dir}/${file}`
                     touch "${dir}/${name}"
-                    `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
-                    `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
+                    # `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
+                    # `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
                     echo -e "${GREEN}${name}${NC}"
                 else
                     touch "${dir}/[${GRP}] CRC Error [${GRP}]"

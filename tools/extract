@@ -6,20 +6,20 @@ export GRP="GROUP_NAME"
 # uncompress
 uncompress
 
-# clear files
-find . -name '*.DS_Store' -type f -delete
-find . -name '*.url' -type f -delete
-find . -name '*.txt' -type f -delete
+declare -a StringArray=(
+                        '*.DS_Store'
+                        '*.url'
+                        '*.txt'
+                        \"*[${GRP}]*COMPLETE*[${GRP}]*\"
+                        )
 
-# clear COMPLETE tags
-find . -name \"*[${GRP}]*COMPLETE*[${GRP}]*\" -type f -delete
+for val in ${StringArray[@]}; do
+  find . -name ${val} -type f -delete
+done
 
-# set dates on directories with COMPLETE tags
 for i in $(ls); do
-  fixdir "${i}"
-  fixdate "${i}"
   m3u_info "${i}"
-  fixdir "${i}"
+  set_date "${i}"
 done
 
 exit 0
