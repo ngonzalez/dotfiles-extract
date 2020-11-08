@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# GROUP_NAME
+export GRP="GROUP_NAME"
+
+declare -a StringArray=(
+                        '*.DS_Store'
+                        '*.url'
+                        '*.txt'
+                        '*[${GRP}]*COMPLETE*[${GRP}]*'
+                        )
+
+for val in ${StringArray[@]}; do
+  find . -name ${val} -type f -delete
+done
+
+exit 0

@@ -1,21 +1,10 @@
 #! /bin/bash
 
-# GROUP_NAME
-export GRP="GROUP_NAME"
-
 # uncompress
 uncompress
 
-declare -a StringArray=(
-                        '*.DS_Store'
-                        '*.url'
-                        '*.txt'
-                        \"*[${GRP}]*COMPLETE*[${GRP}]*\"
-                        )
-
-for val in ${StringArray[@]}; do
-  find . -name ${val} -type f -delete
-done
+# clear_infos
+clear_infos
 
 for i in $(ls); do
   m3u_info "${i}"
