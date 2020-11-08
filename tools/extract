@@ -8,7 +8,7 @@ clear_infos
 
 for i in $(ls); do
   m3u_info "${i}"
-  set_date "${i}"
+  fix_date "${i}"
 done
 
 exit 0
