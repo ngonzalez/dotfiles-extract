@@ -1,11 +1,5 @@
 #! /bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-LIGHT_GREY='\033[0;37m'
-DARK_GREY='\033[1;30m'
-NC='\033[0m' # No Color
-
 dir=$1
 
 if [ -z "${dir}" ]; then
@@ -24,50 +18,13 @@ fi
 # GROUP_NAME
 export GRP="GROUP_NAME"
 
-currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
-dir_name=${dir//[^[:alnum:]]/}
-file1="/tmp/sc1-filecheck-${dir_name}-${currenttime}"
-file2="/tmp/sc2-filecheck-${dir_name}-${currenttime}"
-ext='\.(wav|aif|aiff|flac|mp3|m4a)'
-
 if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
     m3u_file=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
     if [ ! ${m3u_file} ]; then
-      m3u_file=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
+        m3u_file=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
     fi
-    if [ ${m3u_file} ]; then
-        if [ -f ${m3u_file} ]; then
-            ls -1a ${dir} | grep -E ${ext} --color=never > ${file1}
-            cat ${m3u_file} | grep -E ${ext} --color=never > ${file2}
-            if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
-                count=`cat ${file1} | wc -l | bc`
-                if [[ `cfv -p ${dir}` =~ "${count} OK" ]]; then
-                    file=`cat ${file1} | tail -n 1`
-                    genre=`exiftool ${dir}/${file} | grep Genre | awk -F ': ' '{ print $2 }'`
-                    size_du=`du -s ${dir} | awk '{ print $1 }' | bc`
-                    size=$(( ${size_du} / 2048 ))
-                    name="[${GRP}] ${genre} - ${count}"F" ${size}"MB" - COMPLETE [${GRP}]"
-                    name="${name/\//\\}"
-                    date=`/usr/bin/GetFileInfo -m ${dir}/${file}`
-                    touch "${dir}/${name}"
-                    `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
-                    `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
-                    echo -e "${GREEN}${name}${NC}"
-                else
-                    touch "${dir}/[${GRP}] CRC Error [${GRP}]"
-                    echo -e "${RED}CRC Error${NC}"
-                fi
-            else
-                touch "${dir}/[${GRP}] Invalid number of files [${GRP}]"
-                echo -e "${RED}Invalid number of files${NC}"
-            fi
-            if [ -f ${file1} ]; then
-                rm -f ${file1}
-            fi
-            if [ -f ${file2} ]; then
-                rm -f ${file2}
-            fi
-        fi
+    if [ -f ${m3u_file} ]; then
+        create_info $dir $m3u_file
     fi
 fi
 

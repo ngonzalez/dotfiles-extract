@@ -28,18 +28,19 @@ if [ -d ${dir} ]; then
 
   # set folder dates
   last_file=`ls -1a ${dir} | grep -v -e "^\[${GRP}\]" | tail -n1`
-  folder_date=`/usr/bin/GetFileInfo -m "${dir}/${last_file}"`
-  /usr/bin/SetFile -d "${folder_date}" "${dir}"
-  /usr/bin/SetFile -m "${folder_date}" "${dir}"
+  folder_date=`GetFileInfo -m "${dir}/${last_file}"`
+  SetFile -d "${folder_date}" "${dir}"
+  SetFile -m "${folder_date}" "${dir}"
 
   # set files dates
-  date=`/usr/bin/GetFileInfo -d "${dir}"`
+  date=`GetFileInfo -d "${dir}"`
   for i in $(ls -Ap ${dir} | grep -v -e "^\[${GRP}\]"); do
-    /usr/bin/SetFile -d "${date}" ${dir}/${i}
-    /usr/bin/SetFile -m "${date}" ${dir}/${i}
+    SetFile -d "${date}" ${dir}/${i}
+    SetFile -m "${date}" ${dir}/${i}
   done
 
   echo -e "${DARK_GREY}${date} ${NC}${LIGHT_GREY}${dir}${NC} ${GREEN}✓${NC}"
+
 fi
 
 exit 0
