@@ -15,17 +15,6 @@ if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
     exit 1
 fi
 
-# GROUP_NAME
-export GRP="GROUP_NAME"
-
-if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
-    m3u_file=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep '\.m3u' --color=never`
-    if [ ! ${m3u_file} ]; then
-        m3u_file=`ls ${dir}/* | grep '\.m3u' --color=never | head -n 1`
-    fi
-    if [ -f ${m3u_file} ]; then
-        create_info $dir $m3u_file
-    fi
-fi
+validate_ext ${dir} "m3u" create_info
 
 exit 0

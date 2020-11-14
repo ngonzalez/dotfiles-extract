@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# GROUP_NAME
+export GRP="GROUP_NAME"
+
 # uncompress
 uncompress
 

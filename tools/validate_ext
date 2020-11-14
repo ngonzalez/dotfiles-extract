@@ -1,0 +1,39 @@
+#! /bin/bash
+
+declare -r dir=$1
+
+if [ -z "${dir}" ]; then
+    echo "Missing directory parameter. Usage: validate_ext <DIRECTORY> <EXTENSION> <CALLBACK>"
+    exit 1
+fi
+
+if [ ! -d "${dir}" ]; then
+    exit 1
+fi
+
+if [[ `ls "${dir}/" | wc -l | bc` -eq 0 ]]; then
+    exit 1
+fi
+
+declare -r ext=$2
+declare -a ext_array=("m3u" "cue")
+
+if [[ ! " ${ext_array[@]} " =~ " ${ext} " ]]; then
+    echo "Invalid extension parameter. Usage: validate_ext <DIRECTORY> <EXTENSION> <CALLBACK>"
+    exit 1
+fi
+
+declare -r callback=$3
+
+# if [[ ! `type -t ${callback}` = 'function' ]]; then
+#     echo "Invalid callback parameter. Usage: validate_ext <DIRECTORY> <EXTENSION> <CALLBACK>"
+#     exit 1
+# fi
+
+if [[ `ls "${dir}/" | grep "\[${GRP}\]" --color=never | wc -l | bc` -eq 0 ]]; then
+    file=`ls ${dir}/* | grep -E '^0{2,3}' --color=never | grep "\.${ext}" --color=never`
+    if [ ! ${file} ]; then file=`ls ${dir}/* | grep "\.${ext}" --color=never | head -n 1`; fi
+    if [ -f ${file} ]; then ${callback} ${dir} ${file}; fi
+fi
+
+exit 0
