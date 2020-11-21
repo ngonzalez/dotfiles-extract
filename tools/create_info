@@ -52,7 +52,6 @@ if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; the
         touch "${dir}/${name}"
         `SetFile -d "${date}" "${dir}/${name}"`
         `SetFile -m "${date}" "${dir}/${name}"`
-        echo -e "${GREEN}${name}${NC}"
     else
         touch "${dir}/[${GRP}] CRC Error [${GRP}]"
         echo -e "${RED}CRC Error${NC}"
