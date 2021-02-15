@@ -6,7 +6,7 @@ mkdir "deleted-${currenttime}"
 count=`ls | grep '\.rar' --color=never | wc -l`
 
 if [ ${count} -gt 0 ]; then
-    ls *.rar | xargs -I '{}' unrar x -y '{}' 1>/dev/null
+    ls *.rar | xargs -I '{}' rar x -y '{}' 1>/dev/null
     mv *.rar "deleted-${currenttime}"
 fi
 
