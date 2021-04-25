@@ -2,7 +2,7 @@
 ##### install dependencies
 ```bash
 # install brew https://brew.sh
-brew install cfv exiftool git rar
+brew install cfv exiftool rar
 ```
 
 ##### clone repository
