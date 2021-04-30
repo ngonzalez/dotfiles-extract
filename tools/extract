@@ -11,6 +11,7 @@ clear_infos
 
 for i in $(ls); do
   m3u_info "${i}"
+  fix_date "${i}"
 done
 
 exit 0
