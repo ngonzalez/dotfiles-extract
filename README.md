@@ -1,22 +1,25 @@
+# dotfiles-extract
 
-##### install dependencies
-```bash
-# install brew https://brew.sh
+#### install dependencies
+```shell
 brew install cfv exiftool rar
 ```
 
-##### clone repository
-```bash
-git clone git@github.com:ngonzalez/dotfiles-extract.git ~/.dotfiles-extract
+#### clone repository
+```shell
+git clone git@github.com:ngonzalez/dotfiles-extract.git \
+	~/.dotfiles-extract
 ```
 
-##### install extract tools
-```bash
+#### install extract tools
+```shell
+cat >> /home/$USER/.zshrc <<EOL
 typeset -U PATH path
 path=( ~/.dotfiles-extract/tools $path )
+EOL
 ```
 
-##### from command line
-```bash
-$ extract
+#### from command line
+```shell
+extract
 ```
