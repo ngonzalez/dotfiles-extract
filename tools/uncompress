@@ -1,20 +1,20 @@
-#! /bin/bash
+#!/bin/bash
 
 currenttime=$(date "+%Y.%m.%d-%H.%M.%S")
 mkdir "deleted-${currenttime}"
 
-count=`ls | grep '\.rar' --color=never | wc -l`
+rar_count=`ls | grep '\.rar$' --color=never | wc -l`
 
-if [ ${count} -gt 0 ]; then
-    ls *.rar | xargs -I '{}' rar x -y '{}' 1>/dev/null
-    mv *.rar "deleted-${currenttime}"
+if [ ${rar_count} -gt 0 ]; then
+    ls | grep '\.rar$' --color=never | xargs -I '{}' rar x -y '{}' 1>/dev/null
+    ls | grep '\.rar$' --color=never | xargs -I '{}' mv '{}' "deleted-${currenttime}"
 fi
 
-count=`ls | grep '\.tar' --color=never | wc -l`
+tar_count=`ls | grep '\.tar$' --color=never | wc -l`
 
-if [ ${count} -gt 0 ]; then
-    ls *.tar | xargs -I '{}' tar xf '{}' 1>/dev/null
-    mv *.tar "deleted-${currenttime}"
+if [ ${tar_count} -gt 0 ]; then
+    ls | grep '\.tar$' --color=never | xargs -I '{}' tar xf '{}' 1>/dev/null
+    ls | grep '\.tar$' --color=never | xargs -I '{}' mv '{}' "deleted-${currenttime}"
 fi
 
 mv "deleted-${currenttime}" ~/.Trash/.
