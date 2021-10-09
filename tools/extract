@@ -9,10 +9,7 @@ uncompress
 # clear_infos
 clear_infos
 
-for i in $(ls); do
-  if [[ "${i}" == '*.download' ]]; then
-    break
-  fi
+for i in $(ls | grep -v .download); do
   m3u_info "${i}"
   fix_date "${i}"
 done
