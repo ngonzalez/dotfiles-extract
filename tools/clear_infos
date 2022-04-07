@@ -8,6 +8,7 @@ declare -a StringArray=(
                         '*.url'
                         '*.txt'
                         '*[${GRP}]*COMPLETE*[${GRP}]*'
+                        '*[${GRP}]*CRC Error*[${GRP}]*'
                         )
 
 for val in ${StringArray[@]}; do

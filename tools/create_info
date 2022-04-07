@@ -41,17 +41,18 @@ cat ${m3u_file} | grep -E ${ext} --color=never > ${file2}
 
 if [ `diff -i -B --strip-trailing-cr ${file1} ${file2} | wc -l | bc` == 0 ]; then
     count=`cat ${file1} | wc -l | bc`
-    if [[ `cfv -p ${dir}` =~ "${count} OK" ]]; then
+    res=`/usr/local/bin/cksfv -q -g ${dir}/*.sfv; echo $?;`
+    if [[ $res == 0 ]]; then
         file=`cat ${file1} | tail -n 1`
-        genre=`exiftool ${dir}/${file} | grep Genre | awk -F ': ' '{ print $2 }'`
+        genre=`/usr/local/bin/exiftool ${dir}/${file} | grep Genre | awk -F ': ' '{ print $2 }'`
         size_du=`du -s ${dir} | awk '{ print $1 }' | bc`
         size=$(( ${size_du} / 2048 ))
         name="[${GRP}] ${genre} - ${count}"F" ${size}"MB" - COMPLETE [${GRP}]"
         name="${name/\//\\}"
-        date=`GetFileInfo -m ${dir}/${file}`
+        date=`/usr/bin/GetFileInfo -m ${dir}/${file}`
         touch "${dir}/${name}"
-        `SetFile -d "${date}" "${dir}/${name}"`
-        `SetFile -m "${date}" "${dir}/${name}"`
+        `/usr/bin/SetFile -d "${date}" "${dir}/${name}"`
+        `/usr/bin/SetFile -m "${date}" "${dir}/${name}"`
     else
         touch "${dir}/[${GRP}] CRC Error [${GRP}]"
         echo -e "${RED}CRC Error${NC}"
