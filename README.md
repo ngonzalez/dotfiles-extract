@@ -2,7 +2,7 @@
 
 #### install dependencies
 ```shell
-brew install cfv exiftool rar
+brew install cksfv exiftool rar
 ```
 
 #### clone repository
